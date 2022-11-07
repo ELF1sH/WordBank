@@ -8,5 +8,3 @@ Future<bool> hasNetwork() async {
     return false;
   }
 }
-
-

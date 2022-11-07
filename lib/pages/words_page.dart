@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../api.dart';
+import '../api/api.dart';
 import '../helpers/show_toast.dart';
 
 class WordsPage extends StatefulWidget {
@@ -42,18 +42,18 @@ class WordsPageState extends State<WordsPage> {
     await writeDataToFile(await fetchWordsAsString());
   }
 
-  void sendCode() async {
-    await sendAuthorizedCode(textController.text);
-    final prefs = await SharedPreferences.getInstance();
-    final refreshToken = prefs.getString('refresh_token');
-    if (refreshToken == null) {
-      showToast('Unable to get refresh token');
-      return;
-    }
-    final accessToken = await getAccessTokenByRefreshToken(refreshToken);
-    showToast('Access token is:\n$accessToken');
-    prefs.setString('access_token', accessToken);
-  }
+  // void sendCode() async {
+  //   await sendAuthorizedCode(textController.text);
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final refreshToken = prefs.getString('refresh_token');
+  //   if (refreshToken == null) {
+  //     showToast('Unable to get refresh token');
+  //     return;
+  //   }
+  //   final accessToken = await getAccessTokenByRefreshToken(refreshToken);
+  //   showToast('Access token is:\n$accessToken');
+  //   prefs.setString('access_token', accessToken);
+  // }
 
   Column getWordsContainer(List<Word> words) {
     return Column(
@@ -61,11 +61,11 @@ class WordsPageState extends State<WordsPage> {
           Text(_isFromFile ? 'from file' : 'from cloud'),
           SizedBox(height: 30),
           ...words.map((word) => getWordComponent(word)).toList(),
-          OutlinedButton(onPressed: authorize, child: Text('Authorize')),
+          // OutlinedButton(onPressed: authorize, child: Text('Authorize')),
           TextField(
             controller: textController,
           ),
-          OutlinedButton(onPressed: sendCode, child: Text('Send Code')),
+          // OutlinedButton(onPressed: sendCode, child: Text('Send Code')),
           OutlinedButton(onPressed: updateWords, child: Text('Update words')),
           ElevatedButton(
             onPressed: () {
